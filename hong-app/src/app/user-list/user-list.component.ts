@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { User } from '../models/user.model';
 
 @Component({
@@ -35,6 +35,9 @@ export class UserListComponent implements OnInit {
   get users(): User[] {
     return this._usersChild;
   }
+
+  // 부모 컴포넌트에게 상태 정보를 전달하기 위해 출력 프로퍼티를 EventEmitter 객체로 초기화한다.
+  @Output() remove123 = new EventEmitter<User>();
 
   constructor() {}
 

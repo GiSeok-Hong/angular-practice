@@ -5,6 +5,7 @@
       <th>ID</th>
       <th>Name</th>
       <th>Role</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
@@ -13,6 +14,11 @@
       <td>{{ user.id }}</td>
       <td>{{ user.name }}</td>
       <td>{{ user.role }}</td>
+      <td>
+        <button class="btn btn-danger btn-sm" (click)="remove123.emit(user)">
+          <span class="glyphicon glyphicon-remove"></span>
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>

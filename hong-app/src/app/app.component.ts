@@ -36,4 +36,10 @@ export class AppComponent {
       ? Math.max(...this.usersParents.map(({ id }) => id)) + 1
       : 1;
   }
+
+  // 해당 사용자 제거
+  removeUser(user: User) {
+    // 버튼을 누른 아이디와 다른 유저들만 출력
+    this.usersParents = this.usersParents.filter(({ id }) => id !== user.id);
+  }
 }

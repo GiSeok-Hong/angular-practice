@@ -26,7 +26,10 @@
           Add user
         </button>
       </div>
-      <app-user-list [usersChildSet]="usersParents"></app-user-list>
+      <app-user-list
+        [usersChildSet]="usersParents"
+        (remove123)="removeUser($event)"
+      ></app-user-list>
     </div>
   </div>
 </div>
