@@ -1,5 +1,34 @@
-<h1>{{ title }}</h1>
+<h1 style="margin: 30px">{{ title }}</h1>
 
-<app-hello></app-hello>
-<app-user-list></app-user-list>
+<div class="container">
+  <div class="row">
+    <div class="form-inline">
+      <div class="form-group" style="margin: 30px 0">
+        <label for="name">Name : </label>
+        <input
+          #name
+          type="text"
+          id="name"
+          class="form-control"
+          placeholder="이름을 입력하세요"
+        />
+        <label for="role">Role : </label>
+        <select #role id="role" class="form-control">
+          <option value="Administrator">Administrator</option>
+          <option value="Developer">Developer</option>
+          <option value="Designer">Designer</option>
+        </select>
+        <button
+          type="button"
+          class="btn btn-default"
+          (click)="addUser(name.value, role.value)"
+        >
+          Add user
+        </button>
+      </div>
+      <app-user-list [usersChild]="usersParents"></app-user-list>
+    </div>
+  </div>
+</div>
+
 <router-outlet></router-outlet>

@@ -1,1 +1,18 @@
-<p>user-list works! - AppComponent의 자식 컴포넌트 : UserListComponent</p>
+<table class="table">
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Role</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of usersChild; let i = index">
+      <td>{{ i }}</td>
+      <td>{{ user.id }}</td>
+      <td>{{ user.name }}</td>
+      <td>{{ user.role }}</td>
+    </tr>
+  </tbody>
+</table>
