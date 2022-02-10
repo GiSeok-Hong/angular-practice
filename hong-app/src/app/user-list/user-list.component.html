@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let user of usersChild; let i = index">
+    <tr *ngFor="let user of _usersChild; let i = index">
       <td>{{ i }}</td>
       <td>{{ user.id }}</td>
       <td>{{ user.name }}</td>
@@ -16,3 +16,12 @@
     </tr>
   </tbody>
 </table>
+
+<!-- 추가 내용 -->
+<div class="panel panel-default">
+  <div class="panel-body">
+    <p>Admin : {{ cntAdmin }}</p>
+    <p>Developer : {{ cntDeveloper }}</p>
+    <p>Designer : {{ cntDesigner }}</p>
+  </div>
+</div>
