@@ -6,11 +6,19 @@ import { Component } from '@angular/core';
     <button (click)="status = !status">
       {{ status ? 'Destry Child' : 'Create Child' }}
     </button>
-    <app-child *ngIf="status"></app-child>
+    <div *ngIf="status">
+      <button (click)="immutable = 'hihihihihi'">
+        기본 자료형 프로퍼티 변경
+      </button>
+      <button (click)="mutable.name = 'giseok'">객체형 프로퍼티 변경</button>
+
+      <app-child [immutable]="immutable" [mutable]="mutable"></app-child>
+    </div>
   `,
   styles: [],
 })
 export class AppComponent {
   status = false;
-  prop = 'hello';
+  immutable = 'hello';
+  mutable = { name: 'hong' };
 }
