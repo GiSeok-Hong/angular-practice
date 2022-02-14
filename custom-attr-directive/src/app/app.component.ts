@@ -3,13 +3,28 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   template: `
-    <!-- p요소에 어트리뷰트로 appTextBlue 디렉티브를 적용 -->
-    <p appTextColor [color]="color1">textcolor directive</p>
+    <h1>Attribute Directive</h1>
     <h1 appTextBlue>textBlue directive h1</h1>
+    <button appMyDirective [inputValue]="msg" staticValue="hi!">
+      Click Me
+    </button>
+
+    <h4>텍스트의 컬러를 선택하세요</h4>
+
+    <div>
+      <input type="radio" name="colors" (click)="color = 'red'" />Red
+      <input type="radio" name="colors" (click)="color = 'blue'" />Blue
+      <input type="radio" name="colors" (click)="color = 'green'" />Green
+    </div>
+
+    <p [appTextColor]="color" defaultColor="violet">Text Color</p>
   `,
   styles: [],
 })
 export class AppComponent {
   title = 'custom-attr-directive';
-  color1 = 'red';
+
+  msg = 'button click';
+
+  color!: string;
 }
