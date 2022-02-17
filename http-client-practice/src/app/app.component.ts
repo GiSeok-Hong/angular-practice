@@ -1,10 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 interface Todo {
   id: number;
   content: string;
   completed: boolean;
+}
+
+interface ErrorMessage {
+  title: string;
+  message: string;
 }
 
 @Component({
@@ -14,36 +21,54 @@ interface Todo {
       <li *ngFor="let todo of todos">{{ todo.content }}</li>
     </ul>
     <pre>{{ todos | json }}</pre>
+    <h3 class="title">{{ error.title }}</h3>
+    <p class="message">{{ error.message }}</p>
   `,
   styles: [],
 })
 export class AppComponent implements OnInit {
   todos!: Todo[];
-  url = 'http://loaclhost:3000/todos';
+  error!: ErrorMessage;
+  // url = 'http://localhost:3000/todos';
+  // 에러를 발생시키고자 잘못된 url 을 제공
+  url = 'http://localhost:3000/todosX';
 
   // HttpClient를 컴포넌트에 주입
   constructor(public http: HttpClient) {}
 
   ngOnInit() {
-    // HTTP 요청 헤더 생성
-    const headers = new HttpHeaders()
-      .set('Content-type', 'application/json')
-      .set('Authorization', 'my-auth-token');
-
-    // 쿼리 파라미터 생성
-    const params = new HttpParams().set('id', '1').set('completed', 'false');
-
-    // HTTP GET 요청
-    // this.http.get(this.url).subscribe(todos => this.todos = todos);
-    /*
-        요청 결과를 프로퍼티에 할당한다.
-        get 메소드는 Observable<Object>를 반환한다.
-        이때 타입이 일치하지 않기 때문에 컴파일 에러가 발생한다.
-      */
-
     this.http
-      .get<Todo[]>(this.url, { params })
-      .subscribe((todos) => (this.todos = todos));
-    // 요청 결과를 프로퍼티에 할당한다. get 메소드는 Observable<Todo[]>를 반환한다.
+      .get<Todo[]>(this.url)
+      .pipe(
+        // 에러 처리 후 에러 메시지를 생성하여 이를 방출하는 옵저버블 반환
+        catchError(this.handleError)
+      )
+      .subscribe(
+        // 요청 성공 처리 (옵저버의 next 메소드)
+        (todos) => (this.todos = todos),
+        // 에러 처리(옵저버의 error 메소드)
+        (error: ErrorMessage) => (this.error = error)
+      );
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    let message = '';
+
+    // 1. 에러 유형 구분
+    if (error.error instanceof ErrorEvent) {
+      // 클라이언트 측의 에러
+      console.error(`Client-side error : ${error.error.message}`);
+      message = error.error.message;
+    } else {
+      // 백엔드 측의 에러
+      console.error(`Server-side error : ${error.status}`);
+      message = error.message;
+    }
+
+    // 2. 사용자에게 전달할 메시지를 담은 옵저버블 반환
+    return throwError({
+      title: `Something Wrong! please try again later`,
+      message,
+    });
   }
 }
