@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 interface Todo {
   id: number;
@@ -25,6 +25,9 @@ export class AppComponent implements OnInit {
   constructor(public http: HttpClient) {}
 
   ngOnInit() {
+    // 쿼리 파라미터 생성
+    const params = new HttpParams().set('id', '1').set('completed', 'false');
+
     // HTTP GET 요청
     // this.http.get(this.url).subscribe(todos => this.todos = todos);
     /*
@@ -33,7 +36,9 @@ export class AppComponent implements OnInit {
         이때 타입이 일치하지 않기 때문에 컴파일 에러가 발생한다.
       */
 
-    this.http.get<Todo[]>(this.url).subscribe((todos) => (this.todos = todos));
+    this.http
+      .get<Todo[]>(this.url, { params })
+      .subscribe((todos) => (this.todos = todos));
     // 요청 결과를 프로퍼티에 할당한다. get 메소드는 Observable<Todo[]>를 반환한다.
   }
 }
