@@ -34,6 +34,6 @@ export class AppComponent implements OnInit {
       */
 
     this.http.get<Todo[]>(this.url).subscribe((todos) => (this.todos = todos));
-    //
+    // 요청 결과를 프로퍼티에 할당한다. get 메소드는 Observable<Todo[]>를 반환한다.
   }
 }
