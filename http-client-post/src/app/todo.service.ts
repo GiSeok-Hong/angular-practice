@@ -27,6 +27,19 @@ export class TodoService {
       .pipe(catchError(this.handleError));
   }
 
+  // 아이디가 일치하는 todo의 내용 전체를 갱신하도록 서버에 요청한다.
+  change(todo: Todo) {
+    // 서버로 전송할 요청 페이로드. PUT 요청은 해당 데이터 전체를 갱신한다.
+    const payload = {
+      content: 'Angular',
+      completed: !todo.completed,
+    };
+
+    // 요청 url
+    const url = `${this.url}/${todo.id}`;
+    return this.http.put<Todo>(url, payload).pipe(catchError(this.handleError));
+  }
+
   // 에러 핸들러 함수
   private handleError(error: HttpErrorResponse) {
     let message = '';
@@ -40,7 +53,7 @@ export class TodoService {
       message = error.message;
     }
 
-    // 사용자게에 전달할 메시지를 담은 옵저버블 반환
+    // 사용자에게 전달할 메시지를 담은 옵저버블 반환
     return throwError({
       title: 'Something wrong! please try again later',
       message,

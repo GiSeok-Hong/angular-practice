@@ -10,11 +10,20 @@ import { TodoService } from './todo.service';
     <input type="text" [(ngModel)]="content" placeholder="todo" />
     <button (click)="addTodo()">Add</button>
     <ul>
-      <li *ngFor="let todo of todos">{{ todo.content }}</li>
+      <li *ngFor="let todo of todos" [class.completed]="!todo.completed">
+        {{ todo.content }}
+        <button (click)="changeTodo(todo)">change</button>
+      </li>
     </ul>
     <pre>{{ todos | json }}</pre>
   `,
-  styles: [],
+  styles: [
+    `
+      .completed {
+        text-decoration: line-through;
+      }
+    `,
+  ],
 })
 export class AppComponent implements OnInit {
   todos!: Todo[];
@@ -40,5 +49,16 @@ export class AppComponent implements OnInit {
       (error) => console.error('[TodoService.add]', error)
     );
     this.content = '';
+  }
+
+  // todo의 내용 전체를 갱신하여 템플릿에 반영한다.
+  changeTodo(todo: Todo) {
+    this.todo.change(todo).subscribe(
+      (newTodo) =>
+        (this.todos = this.todos.map((todo) =>
+          todo.id === newTodo.id ? newTodo : todo
+        )),
+      (error) => console.error('[TodoService. change]', error)
+    );
   }
 }
