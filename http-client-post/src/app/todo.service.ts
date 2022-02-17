@@ -54,6 +54,14 @@ export class TodoService {
       .pipe(catchError(this.handleError));
   }
 
+  // 아이디가 일치하는 todo를 삭제하도록 서버에 요청한다.
+  remove(id: number) {
+    // 요청 url
+    const url = `${this.url}/${id}`;
+
+    return this.http.delete(url).pipe(catchError(this.handleError));
+  }
+
   // 에러 핸들러 함수
   private handleError(error: HttpErrorResponse) {
     let message = '';

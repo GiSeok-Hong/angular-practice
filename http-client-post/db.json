@@ -1,54 +1,9 @@
 {
   "todos": [
     {
-      "content": "Angular",
-      "completed": true,
+      "content": "hong",
+      "completed": false,
       "id": 1
-    },
-    {
-      "content": "Angular",
-      "completed": false,
-      "id": 2
-    },
-    {
-      "content": "Angular",
-      "completed": true,
-      "id": 3
-    },
-    {
-      "content": "Angular",
-      "completed": true,
-      "id": 4
-    },
-    {
-      "content": "뭐야뭐야",
-      "complete": false,
-      "id": 5
-    },
-    {
-      "content": "Angular",
-      "completed": false,
-      "id": 6
-    },
-    {
-      "content": "asd",
-      "completed": false,
-      "id": 7
-    },
-    {
-      "content": "gkgkgkgkgkg",
-      "completed": false,
-      "id": 8
-    },
-    {
-      "content": "wtf",
-      "completed": true,
-      "id": 9
-    },
-    {
-      "content": " 찌리찌리팍팍",
-      "completed": false,
-      "id": 10
     }
   ]
 }

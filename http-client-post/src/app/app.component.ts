@@ -14,6 +14,7 @@ import { TodoService } from './todo.service';
         {{ todo.content }}
         <button (click)="changeTodo(todo)">change</button>
         <button (click)="toggleTodo(todo)">toggle</button>
+        <button (click)="removeTodo(todo.id)">delete</button>
       </li>
     </ul>
     <pre>{{ todos | json }}</pre>
@@ -71,6 +72,14 @@ export class AppComponent implements OnInit {
           todo.id === newTodo.id ? newTodo : todo
         )),
       (error) => console.error('[TodoService.toggle]', error)
+    );
+  }
+
+  // id를 전달하여 해당 todo를 삭제하고 템플릿에 반영한다.
+  removeTodo(id: number) {
+    this.todo.remove(id).subscribe(
+      () => (this.todos = this.todos.filter((todo) => todo.id !== id)),
+      (error) => console.error('[TodoService.remove]', error)
     );
   }
 }
