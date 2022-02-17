@@ -13,6 +13,7 @@ import { TodoService } from './todo.service';
       <li *ngFor="let todo of todos" [class.completed]="!todo.completed">
         {{ todo.content }}
         <button (click)="changeTodo(todo)">change</button>
+        <button (click)="toggleTodo(todo)">toggle</button>
       </li>
     </ul>
     <pre>{{ todos | json }}</pre>
@@ -58,7 +59,18 @@ export class AppComponent implements OnInit {
         (this.todos = this.todos.map((todo) =>
           todo.id === newTodo.id ? newTodo : todo
         )),
-      (error) => console.error('[TodoService. change]', error)
+      (error) => console.error('[TodoService.change]', error)
+    );
+  }
+
+  // todo의 completed만을 수정하여 템플릿에 반영한다.
+  toggleTodo(todo: Todo) {
+    this.todo.toggle(todo).subscribe(
+      (newTodo) =>
+        (this.todos = this.todos.map((todo) =>
+          todo.id === newTodo.id ? newTodo : todo
+        )),
+      (error) => console.error('[TodoService.toggle]', error)
     );
   }
 }

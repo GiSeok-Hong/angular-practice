@@ -16,8 +16,8 @@
       "id": 3
     },
     {
-      "content": "asd",
-      "complete": false,
+      "content": "Angular",
+      "completed": true,
       "id": 4
     },
     {
@@ -39,6 +39,16 @@
       "content": "gkgkgkgkgkg",
       "completed": false,
       "id": 8
+    },
+    {
+      "content": "wtf",
+      "completed": true,
+      "id": 9
+    },
+    {
+      "content": " 찌리찌리팍팍",
+      "completed": false,
+      "id": 10
     }
   ]
 }

@@ -40,6 +40,20 @@ export class TodoService {
     return this.http.put<Todo>(url, payload).pipe(catchError(this.handleError));
   }
 
+  // 아이디가 일치하는 todo의 completed만 수정하도록 서버에 요청한다.
+  toggle(todo: Todo) {
+    // 서버로 전송할 요청 페이로드. PATCH 요청은 해당 데이터의 일부를 수정한다.
+    const payload = {
+      completed: !todo.completed,
+    };
+
+    // 요청 url
+    const url = `${this.url}/${todo.id}`;
+    return this.http
+      .patch<Todo>(url, payload)
+      .pipe(catchError(this.handleError));
+  }
+
   // 에러 핸들러 함수
   private handleError(error: HttpErrorResponse) {
     let message = '';
