@@ -1,17 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
-interface Todo {
-  id: number;
-  content: string;
-  completed: boolean;
-}
+import { Todo } from './todo.interface';
+import { TodoService } from './todo.service';
+
 @Component({
   selector: 'app-root',
   template: `
     <input type="text" [(ngModel)]="content" placeholder="todo" />
-    <button (click)="add()">Add</button>
+    <button (click)="addTodo()">Add</button>
     <ul>
       <li *ngFor="let todo of todos">{{ todo.content }}</li>
     </ul>
@@ -22,34 +19,26 @@ interface Todo {
 export class AppComponent implements OnInit {
   todos!: Todo[];
   content!: string;
-  url = 'http://localhost:3000/todos';
 
-  constructor(private http: HttpClient) {}
+  constructor(private todo: TodoService) {}
 
   ngOnInit() {
-    this.getTodos().subscribe((todos) => (this.todos = todos));
+    // 모든 todo를 획득하여 템플릿에 제공한다.
+    this.todo.getAll().subscribe(
+      (todos) => (this.todos = todos),
+      (error) => console.error('[TodoService.getAll]', error)
+    );
   }
 
-  // 새로운 todo를 생성한다.
-  add() {
+  // 새로운 todo를 생성하고 생성된 todo를 todos 프로퍼티에 추가하여 템플릿에 반영한다.
+  addTodo() {
     if (!this.content) {
       return;
     }
-
-    this.addTodo().subscribe((todo) => (this.todos = [...this.todos, todo]));
-
+    this.todo.add(this.content).subscribe(
+      (todo) => (this.todos = [...this.todos, todo]),
+      (error) => console.error('[TodoService.add]', error)
+    );
     this.content = '';
-  }
-
-  // 서버에 모든 todo를 요청한다.
-  private getTodos(): Observable<Todo[]> {
-    return this.http.get<Todo[]>(this.url);
-  }
-
-  // 서버에 새로운 todo의 추가를 요청한다.
-  private addTodo(): Observable<Todo> {
-    // 서버로 전송할 요청 페이로드. id는 json-server에 의해 자동 생성된다.
-    const payload = { content: this.content, complete: false };
-    return this.http.post<Todo>(this.url, payload);
   }
 }
