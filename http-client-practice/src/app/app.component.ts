@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 interface Todo {
   id: number;
@@ -25,6 +25,11 @@ export class AppComponent implements OnInit {
   constructor(public http: HttpClient) {}
 
   ngOnInit() {
+    // HTTP 요청 헤더 생성
+    const headers = new HttpHeaders()
+      .set('Content-type', 'application/json')
+      .set('Authorization', 'my-auth-token');
+
     // 쿼리 파라미터 생성
     const params = new HttpParams().set('id', '1').set('completed', 'false');
 
