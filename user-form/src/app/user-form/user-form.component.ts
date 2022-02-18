@@ -6,13 +6,8 @@ import { NgForm } from '@angular/forms';
   template: `
     <h2>User Form</h2>
     <form #userForm="ngForm" (ngSubmit)="onNgSubmit(userForm)" novalidate>
-      <input type="text" name="userid" placeholder="userid" id="userid" />
-      <input
-        type="password"
-        name="password"
-        placeholder="password"
-        id="password"
-      />
+      <input type="text" name="userid" placeholder="userid" ngModel />
+      <input type="password" name="password" placeholder="password" ngModel />
       <button>submit</button>
     </form>
   `,
